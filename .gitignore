@@ -1,0 +1,6 @@
+cpp-simulator/build/
+*.log
+
+csharp-hmi/bin/
+csharp-hmi/obj/
+csharp-hmi/equipment_log.txt
