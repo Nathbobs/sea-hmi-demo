@@ -1,6 +1,11 @@
 cpp-simulator/build/
+cpp-simulator/out/
 *.log
 
 csharp-hmi/bin/
 csharp-hmi/obj/
 csharp-hmi/equipment_log.txt
+
+# Windows-only local tooling, not part of the repo
+.vs/
+vcpkg/

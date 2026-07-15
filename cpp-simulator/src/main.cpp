@@ -12,7 +12,14 @@
 #include <iostream>
 #include <mutex>
 #include <thread>
+
+#ifdef _WIN32
+// modbus-tcp.h (pulled in via modbus.h) already includes <winsock2.h> on
+// Windows, which provides closesocket(). <unistd.h> is POSIX-only and
+// doesn't exist under MSVC.
+#else
 #include <unistd.h>
+#endif
 
 namespace {
 
@@ -71,7 +78,7 @@ double step_toward(double current, double target, double step_magnitude) {
 // same mapping while serving requests.
 //
 // Fill level and temperature are tracked as full-precision doubles across
-// ticks (not re-derived from the rounded uint16 registers each time) —
+// ticks (not re-derived from the rounded uint16 registers each time) --
 // ramp steps like the 1.5-per-tick heating rate have a fractional part,
 // and re-reading the truncated register every tick would silently discard
 // that fraction, compounding into the wrong overall ramp duration. To
@@ -220,7 +227,11 @@ int main() {
     g_running = false;
     sim_thread.join();
 
+#ifdef _WIN32
+    closesocket(server_socket);
+#else
     close(server_socket);
+#endif
     modbus_mapping_free(mapping);
     modbus_free(ctx);
     return 0;

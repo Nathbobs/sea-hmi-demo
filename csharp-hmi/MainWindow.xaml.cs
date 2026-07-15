@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Threading;
 using EasyModbus;
 
@@ -25,6 +26,19 @@ namespace SeaHmiDemo
             "Heating (가열 중)",
             "Draining (배수 중)",
         };
+
+        private static readonly SolidColorBrush ConnectedBrush = new SolidColorBrush(Color.FromRgb(0x2E, 0x9E, 0x5B));
+        private static readonly SolidColorBrush DisconnectedBrush = new SolidColorBrush(Color.FromRgb(0xC0, 0x39, 0x2B));
+
+        private static readonly SolidColorBrush[] PhaseBrushes =
+        {
+            new SolidColorBrush(Color.FromRgb(0x55, 0x60, 0x6E)), // Idle - gray
+            new SolidColorBrush(Color.FromRgb(0x2E, 0x86, 0xDE)), // Filling - blue
+            new SolidColorBrush(Color.FromRgb(0xE6, 0x7E, 0x22)), // Heating - orange
+            new SolidColorBrush(Color.FromRgb(0x16, 0xA0, 0x85)), // Draining - teal
+        };
+
+        private const double TankInnerHeight = 216.0;
 
         private readonly ModbusClient _modbusClient;
         private readonly DispatcherTimer _pollTimer;
@@ -66,12 +80,14 @@ namespace SeaHmiDemo
                 bool alarm = coils[0];
 
                 ConnectionStatusText.Text = "Connected (연결됨)";
+                ConnectionPill.Background = ConnectedBrush;
                 UpdateReadout(fillLevel, temperature, phase, alarm);
                 CheckForLogEvents(phase, alarm);
             }
             catch (Exception)
             {
                 ConnectionStatusText.Text = "Disconnected (연결 안됨)";
+                ConnectionPill.Background = DisconnectedBrush;
             }
         }
 
@@ -79,8 +95,9 @@ namespace SeaHmiDemo
         {
             int clampedPhase = Math.Max(0, Math.Min(phase, PhaseNames.Length - 1));
             PhaseValueText.Text = PhaseNames[clampedPhase];
+            PhaseBadge.Background = PhaseBrushes[clampedPhase];
             TemperatureValueText.Text = $"{temperature} °C";
-            FillLevelBar.Value = fillLevel;
+            TankFillRectangle.Height = Math.Max(0, Math.Min(100, fillLevel) / 100.0 * TankInnerHeight);
             FillLevelValueText.Text = $"{fillLevel}%";
             AlarmBanner.Visibility = alarm ? Visibility.Visible : Visibility.Collapsed;
         }
@@ -139,6 +156,7 @@ namespace SeaHmiDemo
             catch (Exception)
             {
                 ConnectionStatusText.Text = "Disconnected (연결 안됨)";
+                ConnectionPill.Background = DisconnectedBrush;
             }
         }
     }
