@@ -71,7 +71,7 @@ The HMI polls for the simulator automatically and connects on its next poll tick
 
 ## Demo Video
 
-[Demo video link — coming soon]: https://github.com/user-attachments/assets/d86c6ad6-3689-4ed6-9a1d-f4a4f47e8660
+![Demo video link — coming soon]: (https://github.com/user-attachments/assets/d86c6ad6-3689-4ed6-9a1d-f4a4f47e8660)
 
 ## Scope & Limitations
 
