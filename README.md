@@ -8,23 +8,7 @@ I built this to get genuinely hands-on with C++, C#, and Modbus-based equipment 
 
 ## Architecture
 
-```
-┌─────────────────────────┐         Modbus TCP          ┌─────────────────────────┐
-│      C++ Simulator       │ ◄─────────(localhost:502)──► │      C# WPF HMI          │
-│   (Modbus TCP Server)    │      100ms polling            │   (Modbus TCP Client)    │
-├─────────────────────────┤                               ├─────────────────────────┤
-│ Registers:               │                               │ Displays:                │
-│  - fill level (%)        │   reads state ──────────────►│  - phase label            │
-│  - temperature (°C)      │                               │  - temperature readout    │
-│  - phase (idle/fill/     │                               │  - fill-level bar         │
-│    heat/drain)           │                               │  - alarm banner           │
-│  - alarm coil            │                               │                           │
-│                          │   writes command ◄────────────│ Controls:                 │
-│ Recipe loop:             │                               │  - Start / Stop / Reset   │
-│  fill → heat → drain     │                               │    buttons (write coil)   │
-│  (alarm if temp > 65°C)  │                               │  - timestamped log file   │
-└─────────────────────────┘                               └─────────────────────────┘
-```
+![Architecture diagram: C++ Modbus TCP server simulating a PLC, polled by a C# WPF HMI acting as a Modbus TCP client](images/SEA-hmi-architecture.png)
 
 - **C++ side** — the simulated PLC. No GUI. Runs a Modbus TCP server and an internal recipe state machine that advances a wet-process tank over time, independent of whether a client is connected.
 - **C# side** — the HMI. A WPF desktop app acting as a Modbus TCP client: polls the server every 100ms, renders live state, and writes operator commands back.
