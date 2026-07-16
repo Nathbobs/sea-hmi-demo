@@ -4,7 +4,17 @@ A two-process demo exploring how industrial equipment control migrates from PLC-
 
 I built this to get genuinely hands-on with C++, C#, and Modbus-based equipment control: writing the recipe state machine and the protocol handling myself, rather than just describing the concepts.
 
-![HMI connected, Idle phase](images/connected_idle.png)
+<table>
+<tr>
+<td width="50%">
+
+
+</td>
+<td width="50%">
+<img src="images/connected_idle.png" alt="HMI connected, Idle phase" width="100%">
+</td>
+</tr>
+</table>
 
 ## Architecture
 
@@ -69,10 +79,6 @@ dotnet run
 
 The HMI polls for the simulator automatically and connects on its next poll tick once it's reachable — no manual reconnect needed, and it doesn't matter which process you start first. Press **Start (시작)** to run a full fill → heat → drain cycle; phase transitions and alarm events are written to `equipment_log.txt` next to the executable.
 
-## Demo Video
-
-![Demo video link — coming soon]: (https://github.com/user-attachments/assets/d86c6ad6-3689-4ed6-9a1d-f4a4f47e8660)
-
 ## Scope & Limitations
 
 This is a demo built to explore the architecture and protocol, not production equipment-control software:
@@ -82,5 +88,3 @@ This is a demo built to explore the architecture and protocol, not production eq
 - No authentication, security hardening, or multi-user support
 - No persistence beyond a local timestamped log file
 - No automated test suite — verified manually, including live fault injection over Modbus to exercise the alarm path
-
-For the deeper build narrative — architecture decisions, bugs found along the way, and what was verified end-to-end — see [`PORTFOLIO_DRAFT.md`](PORTFOLIO_DRAFT.md).
