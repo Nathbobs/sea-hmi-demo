@@ -4,16 +4,13 @@ A two-process demo exploring how industrial equipment control migrates from PLC-
 
 I built this to get genuinely hands-on with C++, C#, and Modbus-based equipment control: writing the recipe state machine and the protocol handling myself, rather than just describing the concepts.
 
-<table>
-<tr>
-<td width="50%">
+## Demo Video
+
 <video src="https://github.com/user-attachments/assets/d86c6ad6-3689-4ed6-9a1d-f4a4f47e8660" controls width="100%"></video>
-</td>
-<td width="50%">
-<img src="images/connected_idle.png" alt="HMI connected, Idle phase" width="100%">
-</td>
-</tr>
-</table>
+
+## Demo Images
+
+<img src="images/connected_idle.png" alt="HMI connected, Idle phase" width="600">
 
 ## Architecture
 
