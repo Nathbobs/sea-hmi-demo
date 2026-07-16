@@ -7,8 +7,7 @@ I built this to get genuinely hands-on with C++, C#, and Modbus-based equipment 
 <table>
 <tr>
 <td width="50%">
-
-
+<video src="https://github.com/user-attachments/assets/d86c6ad6-3689-4ed6-9a1d-f4a4f47e8660" controls width="100%"></video>
 </td>
 <td width="50%">
 <img src="images/connected_idle.png" alt="HMI connected, Idle phase" width="100%">
